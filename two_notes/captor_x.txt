@@ -1,0 +1,176 @@
+VERSION 1 # Currently, this should only be 1.
+
+# Supports all alphanumeric ASCII, and ' ', '_', '-', '+' - can also be NULL
+TRACKNAME Two Notes Captor X
+
+# Can be POLY, DRUM, MPE, or NULL
+TYPE POLY
+
+# Can be A, B, C, D, USBD, USBH, CVGx (x between 1&4), CVx, Gx, or NULL
+OUTPORT NULL
+
+# Can be x (between 1-16), or NULL -- this is ignored if output port is not MIDI
+OUTCHAN NULL
+
+# Can be NONE, ALLACTIVE, A, B, USBH, USBD, CVG, or NULL
+INPORT NULL
+
+# Can be x (between 1-16), ALL, or NULL. This definition will be ignored if INPORT is NONE, ALLACTIVE or CVG
+INCHAN NULL
+
+# DRUMLANES
+# Syntax: ROW:TRIG:CHAN:NOTENUMBER NAME
+# ROW must be between 1 and 8
+# TRIG can be between 0 and 127, or NULL
+# CHAN can be a number between 1 and 16, Gx, CVx, CVGx (x between 1 and 4), or NULL
+# NOTENUMBER can be between 0 and 127, or NULL
+# NAME supports all alphanumeric ASCII, and ' ', '_', '-', '+' - can also be NULL
+# Please note this section will be discarded for tracks which are not DRUM tracks
+[DRUMLANES]
+[/DRUMLANES]
+
+
+# PC
+# Syntax: NUMBER NAME
+# number must be either:
+#   - A number (for simple PC)
+#   - Three numbers, delimited by ':', which represent PC:MSB:LSB. You can put 'NULL' to not set the MSB/LSB.
+# PC must be between 1...128
+# MSB/LSB must be between 0...127
+[PC]
+[/PC]
+
+
+# CC
+# Syntax: CC_NUMBER NAME or CC_NUMBER:DEFAULT=xx NAME
+# DEFAULT_VALUE must be a valid number between 0 and 127
+[CC]
+6 Cab/Mic On/Off
+7 Cab/Mic Unused
+8 Cab/Mic Cab
+9 Cab/Mic File A
+10 Cab/Mic File B
+11 Cab/Mic Folder A
+12 Cab/Mic Folder B
+13 Cab/Mic Mic A
+14 Cab/Mic Distance A
+15 Cab/Mic Center A
+16 Cab/Mic Position A
+35 Cab/Mic Level A
+36 Cab/Mic Phase A
+37 Cab/Mic Mute A
+38 Cab/Mic Mic B
+39 Cab/Mic Distance B
+40 Cab/Mic Center B
+41 Cab/Mic Position B
+42 Cab/Mic Level B
+43 Cab/Mic Phase B
+44 Cab/Mic Mute B
+51 Cab/Mic Bypass A
+52 Cab/Mic Bypass B
+17 EQ On/Off
+18 EQ Mode
+19 EQ Gain: Low
+20 EQ Gain: Low Mid
+21 EQ Gain: Mid
+22 EQ Gain: High Mid
+23 EQ Gain: High
+45 EQ Freq: Low Cut
+46 EQ Freq: Low
+47 EQ Freq: Low Mid
+48 EQ Freq: Mid
+49 EQ Freq: High Mid
+50 EQ Freq: High
+24 Level Preset
+86 Level Preset R
+25 Reverb On/Off
+26 Reverb Preset
+27 Reverb Dry/Wet
+72 Reverb Dry/Wet R
+53 Reverb Size
+54 Reverb Echo
+55 Reverb Color
+56 Reverb Type
+57 Reverb Width
+58 Noise Gate On/Off
+59 Noise Gate Mode
+60 Noise Gate Threshold
+61 Enhancer On/Off
+62 Enhancer Instrument
+63 Enhancer Body
+44 Enhancer Thickness
+65 Enhancer Brilliance
+66 Enhancer Dry/Wet
+67 Twin Tracker On/Off
+68 Twin Tracker Tightness
+69 Twin Tracker Balance
+70 Output Mode
+71 Output Space Pot Assign
+73 EQ R On/Off
+74 EQ R Mode
+75 EQ R Gain: Low
+76 EQ R Gain: Low Mid
+77 EQ R Gain: Mid
+78 EQ R Gain: High Mid
+79 EQ R Gain: High
+80 EQ R Freq: Low Cut
+81 EQ R Freq: Low
+82 EQ R Freq: Low Mid
+83 EQ R Freq: Mid
+84 EQ R Freq: High Mid
+85 EQ R Freq: High
+34 Preset Mode
+87 General Out Level
+88 General Mute
+89 General Bypass
+90 General Preset
+91 General Voicing
+92 General Space
+[/CC]
+
+
+# NRPN
+# Syntax: "MSB:LSB:DEPTH NAME" or "MSB:LSB:DEPTH:DEFAULT=xx NAME"
+# Lsb & msb should be between 0 and 127
+# DEPTH can be 7 or 14
+# For NRPN: DEFAULT_VALUE must be a valid number, either between 0 and 127 (for 7 bit NRPNs) or between 0 and 16383 (for 14bit NRPNs)
+[NRPN]
+[/NRPN]
+
+
+# ASSIGN
+# Syntax: POT_NUMBER TYPE:VALUE or POT_NUMBER TYPE:VALUE DEFAULT=DEFAULT_VALUE
+# POT_NUMBER must be between 1 and 8
+# TYPE can be "CC", "PB" (pitchbend), "AT" (aftertouch), "CV", "NRPN", or "NULL" (this won't assign the pot).
+# Non explicitly-defined pots will be considered "NULL"
+# VALUE VALIDATION
+#### For CC: Value must be a valid number between 0 and 119
+#### For PB and AT, any text after the TYPE will be ignored
+#### For CV, value must be between 1 and 4
+#### For NRPN, value must be MSB:LSB:DEPTH, with both lsb & msb bebtween 0 and 127, and DEPTH being either 7 or 14
+# DEFAULT VALUE
+#### For CC: DEFAULT_VALUE must be a valid number between 0 and 127
+#### For PB: DEFAULT_VALUE must be a valid number between 0 and 16383
+#### For NRPN: DEFAULT_VALUE must be a valid number, either between 0 and 127 (for 7 bit NRPNs) or between 0 and 16383 (for 14bit NRPNs)
+#### For CV: DEFAULT_VALUE must be either a valid number between 0 and 65535, or a voltage between -5V and 5V, e.g. "-4.25V" or "1.7V"
+#### Please note default value will be ignored for PB and AT messages.
+[ASSIGN]
+[/ASSIGN]
+
+
+# AUTOMATION
+# Syntax: TYPE:VALUE
+# TYPE can be "CC", "PB" (pitchbend), "AT" (aftertouch), "CV", or "NRPN"
+# VALUE VALIDATION
+#### For CC: Value must be a valid number between 0 and 119
+#### For PB and AT, any text after the TYPE will be ignored
+#### For CV, value must be between 1 and 4
+#### For NRPN, value must be MSB:LSB:DEPTH, with both lsb & msb bebtween 0 and 127, and DEPTH being either 7 or 14
+[AUTOMATION]
+[/AUTOMATION]
+
+
+# This section will be readable from Hapax.
+[COMMENT]
+Captor X by Two Notes
+[/COMMENT]
